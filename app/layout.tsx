@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={cn(geistMono.className, "antialiased mx-auto max-w-screen-xl px-4 border min-h-screen")}>
+      <body className={cn(geistMono.className, "bg-black antialiased mx-auto max-w-screen-xl px-4 min-h-screen")}>
         <main>{children}</main>
       </body>
     </html>
