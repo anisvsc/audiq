@@ -9,7 +9,8 @@ import { motion } from "framer-motion"
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const [isSigningUp, setIsSigningUp] = useState(false)
 
   const navItems = [
     { name: "Features", href: "#features" },
@@ -18,24 +19,24 @@ export function Header() {
   ]
 
   const handleLogin = async () => {
-    setIsLoading(true)
+    setIsLoggingIn(true)
     try {
       await new Promise(resolve => setTimeout(resolve, 1000))
     } catch (error) {
       console.error('Login failed:', error)
     } finally {
-      setIsLoading(false)
+      setIsLoggingIn(false)
     }
   }
 
   const handleSignUp = async () => {
-    setIsLoading(true)
+    setIsSigningUp(true)
     try {
       await new Promise(resolve => setTimeout(resolve, 1000))
     } catch (error) {
       console.error('Signup failed:', error)
     } finally {
-      setIsLoading(false)
+      setIsSigningUp(false)
     }
   }
 
@@ -80,9 +81,9 @@ export function Header() {
             className="hidden md:flex hover:bg-white/5" 
             aria-label="Log in"
             onClick={handleLogin}
-            disabled={isLoading}
+            disabled={isLoggingIn}
           >
-            {isLoading ? (
+            {isLoggingIn ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                 Logging in...
@@ -96,9 +97,9 @@ export function Header() {
             className="hidden md:flex"
             aria-label="Sign up"
             onClick={handleSignUp}
-            disabled={isLoading}
+            disabled={isSigningUp}
           >
-            {isLoading ? (
+            {isSigningUp ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                 Signing up...
@@ -147,9 +148,9 @@ export function Header() {
                     className="w-full"
                     aria-label="Sign up"
                     onClick={handleSignUp}
-                    disabled={isLoading}
+                    disabled={isSigningUp}
                   >
-                    {isLoading ? (
+                    {isSigningUp ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                         Signing up...
@@ -163,9 +164,9 @@ export function Header() {
                     className="w-full border-white/10 hover:bg-white/5"
                     aria-label="Log in"
                     onClick={handleLogin}
-                    disabled={isLoading}
+                    disabled={isLoggingIn}
                   >
-                    {isLoading ? (
+                    {isLoggingIn ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                         Logging in...
