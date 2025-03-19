@@ -2,51 +2,129 @@
 
 import { Button } from "@/components/ui/button"
 import { AudioVisualizer } from "@/components/ui/audio-visualizer"
-import Link from "next/link"
+import { ArrowRight, Sparkles } from "lucide-react"
+import { motion } from "framer-motion"
+
+const stats = [
+  { number: "10K+", label: "Active Users" },
+  { number: "50K+", label: "Tracks" },
+  { number: "100+", label: "Genres" }
+] as const
 
 export function HeroSection() {
+  const fadeUpVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+      }
+    }
+  }
+
+  const statsVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.5
+      }
+    }
+  }
+
+  const statItemVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  }
+
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <motion.section className="relative overflow-hidden py-20 md:py-32 min-h-[90vh] flex items-center">
       <div className="absolute inset-0 z-0">
         <AudioVisualizer />
       </div>
+
+      {/* Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:3rem_3rem]" />
+
       <div className="container relative z-10 flex flex-col items-center text-center">
-        <div className="space-y-4 max-w-3xl">
+        <motion.div 
+          className="space-y-6 max-w-4xl"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+        >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             Test Your Music Knowledge with{" "}
-            <span className="bg-gradient-to-r from-primary to-purple-400 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-violet-400 via-primary to-purple-400 text-transparent bg-clip-text">
               Audiq
             </span>
           </h1>
-          <p className="mx-auto max-w-[700px] text-muted-foreground text-lg md:text-xl">
+          <p className="mx-auto max-w-[700px] text-white/70 text-lg md:text-xl leading-relaxed">
             Challenge yourself with our interactive music quizzes. Guess the tracks, beat the scores, and climb the leaderboards.
           </p>
-        </div>
-        <div className="mt-10 flex flex-wrap gap-4 justify-center">
-          <Button size="lg" className="h-12 px-8">
+        </motion.div>
+
+        <motion.div 
+          className="mt-10 flex flex-wrap gap-4 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <Button 
+            size="lg" 
+            variant="gradient"
+            className="h-12 px-8 group"
+          >
             Start Quizzing
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
-          <Button size="lg" variant="outline" className="h-12 px-8">
+          <Button 
+            size="lg" 
+            variant="outline" 
+            className="h-12 px-8 group border-white/10 bg-white/5 hover:bg-white/10"
+          >
             Learn More
+            <Sparkles className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
           </Button>
-        </div>
-        <div className="mt-16 flex items-center justify-center gap-8 text-muted-foreground">
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-bold text-foreground">10K+</span>
-            <span className="text-sm">Active Users</span>
-          </div>
-          <div className="h-10 w-px bg-border"></div>
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-bold text-foreground">50K+</span>
-            <span className="text-sm">Tracks</span>
-          </div>
-          <div className="h-10 w-px bg-border"></div>
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-bold text-foreground">100+</span>
-            <span className="text-sm">Genres</span>
-          </div>
-        </div>
+        </motion.div>
+
+        <motion.div 
+          className="mt-20 flex flex-wrap items-center justify-center gap-8 md:gap-16"
+          variants={statsVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {stats.map((stat) => (
+            <motion.div 
+              key={stat.label}
+              variants={statItemVariants}
+              className="flex flex-col items-center"
+            >
+              <span className="text-4xl font-bold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+                {stat.number}
+              </span>
+              <span className="text-sm text-white/60 mt-1">
+                {stat.label}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </section>
+
+      {/* Decorative Elements */}
+      <div className="absolute -left-24 -top-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -right-24 -bottom-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+    </motion.section>
   )
 }

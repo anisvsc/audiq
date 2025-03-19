@@ -2,20 +2,25 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Music, Loader2 } from 'lucide-react'
+import { Music, Loader2, Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from 'lucide-react'
+import { motion } from "framer-motion"
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  const navItems = [
+    { name: "Features", href: "#features" },
+    { name: "Testimonials", href: "#testimonials" },
+    { name: "Pricing", href: "#pricing" },
+  ]
+
   const handleLogin = async () => {
     setIsLoading(true)
     try {
-      // Add your login logic here
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
     } catch (error) {
       console.error('Login failed:', error)
     } finally {
@@ -26,8 +31,7 @@ export function Header() {
   const handleSignUp = async () => {
     setIsLoading(true)
     try {
-      // Add your signup logic here
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulated API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
     } catch (error) {
       console.error('Signup failed:', error)
     } finally {
@@ -36,43 +40,44 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md" role="banner">
+    <motion.header 
+      className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.3 }}
+      role="banner"
+    >
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Music className="h-6 w-6 text-primary" aria-hidden="true" />
+        <Link 
+          href="/"
+          className="flex items-center gap-2 hover:opacity-90 transition-opacity"
+        >
+          <div className="rounded-lg bg-primary/10 p-2 backdrop-blur-sm">
+            <Music className="h-6 w-6 text-primary" aria-hidden="true" />
+          </div>
           <span className="text-xl font-bold bg-gradient-to-r from-primary to-purple-400 text-transparent bg-clip-text">
             Audiq
           </span>
-        </div>
+        </Link>
         
-        <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-          <Link 
-            href="#features" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Features section"
-          >
-            Features
-          </Link>
-          <Link 
-            href="#testimonials" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Testimonials section"
-          >
-            Testimonials
-          </Link>
-          <Link 
-            href="#pricing" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Pricing section"
-          >
-            Pricing
-          </Link>
+        <nav className="hidden md:flex items-center gap-8" role="navigation" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <Link 
+              key={item.name}
+              href={item.href} 
+              className="group relative text-sm text-white/70 hover:text-white transition-colors"
+              aria-label={`${item.name} section`}
+            >
+              {item.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-primary to-purple-400 transition-all duration-300 group-hover:w-full" />
+            </Link>
+          ))}
         </nav>
         
         <div className="flex items-center gap-4">
           <Button 
             variant="ghost" 
-            className="hidden md:flex" 
+            className="hidden md:flex hover:bg-white/5" 
             aria-label="Log in"
             onClick={handleLogin}
             disabled={isLoading}
@@ -87,6 +92,8 @@ export function Header() {
             )}
           </Button>
           <Button 
+            variant="gradient"
+            className="hidden md:flex"
             aria-label="Sign up"
             onClick={handleSignUp}
             disabled={isLoading}
@@ -106,6 +113,7 @@ export function Header() {
               <Button 
                 variant="ghost" 
                 size="icon"
+                className="hover:bg-white/5"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
@@ -114,67 +122,64 @@ export function Header() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" id="mobile-menu" role="dialog" aria-label="Mobile menu">
-              <div className="flex flex-col gap-4 mt-8">
-                <Link 
-                  href="#features" 
-                  className="text-sm hover:text-primary transition-colors"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Features section"
-                >
-                  Features
-                </Link>
-                <Link 
-                  href="#testimonials" 
-                  className="text-sm hover:text-primary transition-colors"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Testimonials section"
-                >
-                  Testimonials
-                </Link>
-                <Link 
-                  href="#pricing" 
-                  className="text-sm hover:text-primary transition-colors"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Pricing section"
-                >
-                  Pricing
-                </Link>
-                <Button 
-                  className="mt-4" 
-                  aria-label="Sign up"
-                  onClick={handleSignUp}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                      Signing up...
-                    </>
-                  ) : (
-                    "Sign up"
-                  )}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  aria-label="Log in"
-                  onClick={handleLogin}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                      Logging in...
-                    </>
-                  ) : (
-                    "Log in"
-                  )}
-                </Button>
-              </div>
+            <SheetContent 
+              side="right" 
+              id="mobile-menu" 
+              role="dialog" 
+              aria-label="Mobile menu"
+              className="w-full max-w-xs border-white/10 bg-background/95 backdrop-blur-xl"
+            >
+              <nav className="flex flex-col gap-6 mt-8">
+                {navItems.map((item) => (
+                  <Link 
+                    key={item.name}
+                    href={item.href} 
+                    className="text-lg text-white/70 hover:text-white transition-colors"
+                    onClick={() => setIsOpen(false)}
+                    aria-label={`${item.name} section`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <div className="flex flex-col gap-4 mt-4">
+                  <Button 
+                    variant="gradient"
+                    className="w-full"
+                    aria-label="Sign up"
+                    onClick={handleSignUp}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                        Signing up...
+                      </>
+                    ) : (
+                      "Sign up"
+                    )}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-white/10 hover:bg-white/5"
+                    aria-label="Log in"
+                    onClick={handleLogin}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                        Logging in...
+                      </>
+                    ) : (
+                      "Log in"
+                    )}
+                  </Button>
+                </div>
+              </nav>
             </SheetContent>
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
