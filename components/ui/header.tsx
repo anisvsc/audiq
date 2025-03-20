@@ -51,12 +51,14 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8" role="navigation" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <Link key={item.name} href={item.href} className="group relative text-sm text-white/70 hover:text-white transition-colors" aria-label={`${item.name} section`}>
-              {item.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-primary to-purple-400 transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+          <div className="absolute flex items-center gap-8 left-1/2 -translate-x-1/2">
+            {navItems.map((item) => (
+              <Link href={item.href} key={item.name} className="group relative text-sm text-white/70 hover:text-white transition-colors" aria-label={`${item.name} section`}>
+                {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-primary to-purple-400 transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
+          </div>
         </nav>
 
         <div className="flex items-center gap-4">
