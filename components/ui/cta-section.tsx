@@ -17,7 +17,7 @@ export function CtaSection() {
           <div className="relative p-8 md:p-12 lg:p-16">
             <div className="mx-auto max-w-2xl text-center">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}>
-                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/70">Ready to test your music knowledge?</h2>
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl pb-2 md:text-5xl bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/70">Ready to test your music knowledge?</h2>
                 <p className="mt-4 text-base md:text-lg  text-white/70">Join thousands of music enthusiasts and put your skills to the test. Sign up today and get access to all our premium quizzes.</p>
               </motion.div>
 
