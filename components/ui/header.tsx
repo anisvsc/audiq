@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
 import { motion } from "framer-motion";
 
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton, UserProfile } from "@clerk/nextjs";
+import { User } from "@clerk/nextjs/dist/types/server";
+
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -62,7 +65,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden md:flex hover:bg-white/5" aria-label="Log in" onClick={handleLogin} disabled={isLoggingIn}>
+          {/* <Button variant="ghost" className="hidden md:flex hover:bg-white/5" aria-label="Log in" onClick={handleLogin} disabled={isLoggingIn}>
             {isLoggingIn ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
@@ -81,7 +84,15 @@ export function Header() {
             ) : (
               "Sign up"
             )}
-          </Button>
+          </Button> */}
+          <SignedOut>
+            <Button variant="gradient" className="hidden md:flex hover:bg-white/5">
+              <SignInButton />
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
@@ -106,26 +117,11 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="flex flex-col gap-4 mt-4">
-                  <Button variant="gradient" className="w-full" aria-label="Sign up" onClick={handleSignUp} disabled={isSigningUp}>
-                    {isSigningUp ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                        Signing up...
-                      </>
-                    ) : (
-                      "Sign up"
-                    )}
-                  </Button>
-                  <Button variant="outline" className="w-full border-white/10 hover:bg-white/5" aria-label="Log in" onClick={handleLogin} disabled={isLoggingIn}>
-                    {isLoggingIn ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                        Logging in...
-                      </>
-                    ) : (
-                      "Log in"
-                    )}
-                  </Button>
+                  <SignedOut>
+                    <Button variant="gradient" className="w-full">
+                      <SignInButton />
+                    </Button>
+                  </SignedOut>
                 </div>
               </nav>
             </SheetContent>

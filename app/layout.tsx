@@ -7,6 +7,9 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { AudioVisualizer } from "@/components/ui/audio-visualizer";
 // import { ThemeProvider } from "@/components/theme-provider"
 
+// clerk
+import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 // euclid font
 const euclid = localFont({
   src: [
@@ -34,17 +37,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
-      <body className={cn(euclid.className, "bg-background antialiased relative min-h-screen")}>
-        <div className="fixed inset-0 z-0">
-          <AudioVisualizer />
-        </div>
-        <div className="relative z-10 ">
-          {/* <ThemeProvider attribute="class" defaultTheme="dark" enableSystem> */}
-          <ErrorBoundary>{children}</ErrorBoundary>
-          {/* </ThemeProvider> */}
-        </div>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+        <body className={cn(euclid.className, "bg-background antialiased relative min-h-screen")}>
+          <div className="fixed inset-0 z-0">
+            <AudioVisualizer />
+          </div>
+          <div className="relative z-10 ">
+            {/* <ThemeProvider attribute="class" defaultTheme="dark" enableSystem> */}
+            <ErrorBoundary>{children}</ErrorBoundary>
+            {/* </ThemeProvider> */}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
