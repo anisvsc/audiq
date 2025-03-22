@@ -44,7 +44,7 @@ export function Header() {
     <motion.header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60" initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.3 }} role="banner">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-          <div className="rounded-lg bg-primary/10 p-2 backdrop-blur-sm">
+          <div className="rounded-lg hidden md:block bg-primary/10 p-2 backdrop-blur-sm">
             <Music className="h-6 w-6 text-primary" aria-hidden="true" />
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-primary to-purple-400 text-transparent bg-clip-text">Audiq</span>
@@ -85,10 +85,10 @@ export function Header() {
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="hover:bg-white/5" aria-label={isOpen ? "Close menu" : "Open menu"} aria-expanded={isOpen} aria-controls="mobile-menu">
-                <Menu className="h-5 w-5" aria-hidden="true" />
+              <div aria-label={isOpen ? "Close menu" : "Open menu"} aria-expanded={isOpen} aria-controls="mobile-menu">
+                <Menu className="size-[20px]" aria-hidden="true" />
                 <span className="sr-only">Toggle menu</span>
-              </Button>
+              </div>
             </SheetTrigger>
             <SheetContent side="right" id="mobile-menu" role="dialog" aria-label="Mobile menu" className="w-full max-w-xs border-white/10 bg-background/95 backdrop-blur-xl">
               <nav className="flex flex-col gap-6 mt-8">

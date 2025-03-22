@@ -39,7 +39,7 @@ export default function RootLayout({
         <div className="fixed inset-0 z-0">
           <AudioVisualizer />
         </div>
-        <div className="relative z-10">
+        <div className="relative z-10 ">
           {/* <ThemeProvider attribute="class" defaultTheme="dark" enableSystem> */}
           <ErrorBoundary>{children}</ErrorBoundary>
           {/* </ThemeProvider> */}
